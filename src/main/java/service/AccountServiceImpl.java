@@ -2,8 +2,8 @@ package service;
 
 
 import dao.AccountDao;
+
 import dao.AccountDaoImpl;
-import exception.OverdraftException;
 import model.AccountPojo;
 
 
@@ -14,40 +14,30 @@ public class AccountServiceImpl implements AccountService{
 	public AccountServiceImpl() {
 		accountDao = new AccountDaoImpl();
 	}
-	
 	public AccountDao getAccountDao() {
 		return accountDao;
 	}
-	
 	public void setAccountDao(AccountDao accountDao) {
 		this.accountDao = accountDao;
 	}
 
 	@Override
-	public AccountPojo WithdrawFromAccount(AccountPojo accountPojo, double withdrawFunds) throws OverdraftException {
+	public AccountPojo withdrawFromAccount(AccountPojo accountPojo, double withdrawFunds) {
 		
-		return accountDao.WithdrawFromAccount(accountPojo);
+		return accountDao.withdrawFromAccount(accountPojo);
 	}
 
 	@Override
-	public AccountPojo DepositToAccount(AccountPojo accountPojo, double depostitFunds) {
+	public AccountPojo depositToAccount(AccountPojo accountPojo, double depostitFunds) {
 		
-		return accountDao.DepositToAccount(accountPojo);
+		return accountDao.depositToAccount(accountPojo);
 	}
 
 	@Override
-	public AccountPojo AccountNumber(AccountPojo accountPojo) {
+	public AccountPojo viewAccountBalance(AccountPojo accountPojo, double viewAccountBalance) {
 		
-		return accountDao.AccountNumber(accountPojo);
+		return accountDao.viewAccountBalance(accountPojo);
 	}
 
-	@Override
-	public AccountPojo AccountBalance(AccountPojo accountPojo) {
-		
-		return accountDao.AccountBalance(accountPojo);
-	}
+}
 	
-	
-	}
-	
-

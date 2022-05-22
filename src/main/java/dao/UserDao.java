@@ -1,9 +1,7 @@
 package dao;
 
 
-import exception.InvalidLogin;
 import exception.SystemException;
-import model.AccountPojo;
 import model.UserPojo;
 
 public interface UserDao {

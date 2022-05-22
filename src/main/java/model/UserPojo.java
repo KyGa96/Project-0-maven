@@ -3,18 +3,18 @@ package model;
 public class UserPojo {
 	private String password;
 	private String username;
-	private int accountNumer;
+	private int accountNumber;
 	
 	
 	public UserPojo() {
 		}
 
 
-	public UserPojo(String password, String username, int accountNumer) {
+	public UserPojo(String password, String username, int accountNumber) {
 		super();
 		this.password = password;
 		this.username = username;
-		this.accountNumer = accountNumer;
+		this.accountNumber = accountNumber;
 	}
 
 
@@ -39,18 +39,18 @@ public class UserPojo {
 
 
 	public int getAccountNumer() {
-		return accountNumer;
+		return accountNumber;
 	}
 
 
-	public void setAccountNumber(int accountNumer) {
-		this.accountNumer = accountNumer;
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 
 
 	@Override
 	public String toString() {
-		return "UserPojo [password=" + password + ", username=" + username + ", accountNumer=" + accountNumer + "]";
+		return "UserPojo [password=" + password + ", username=" + username + ", accountNumber=" + accountNumber + "]";
 	}
 	
 	

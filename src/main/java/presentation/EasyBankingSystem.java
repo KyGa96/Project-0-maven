@@ -153,6 +153,11 @@ public class EasyBankingSystem {
 							System.out.println("|              CONTINUE? (Y/N)              |");
 							System.out.println("|-------------------------------------------|");
 							proceed = menu.nextLine();
+							
+							String accountProceed = "Y";
+							while (accountProceed == "Y"){
+								
+							}
 							System.out.println("|-------------------------------------------|");
 							System.out.println("|   ***EASY BANKING MANAGEMENT SYSTEM***    |");
 							System.out.println("|-------------------------------------------|");

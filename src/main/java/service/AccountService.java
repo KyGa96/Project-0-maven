@@ -1,7 +1,5 @@
 package service;
 
-
-import exception.OverdraftException;
 import model.AccountPojo;
 
 public interface AccountService {
@@ -10,13 +8,11 @@ public interface AccountService {
 
 	
 
-	AccountPojo WithdrawFromAccount(AccountPojo accountPojo, double withdrawFunds) throws OverdraftException;
+	AccountPojo withdrawFromAccount(AccountPojo accountPojo, double withdrawFunds);
 	
-	AccountPojo DepositToAccount(AccountPojo accountPojo, double depostitFunds);
+	AccountPojo depositToAccount(AccountPojo accountPojo, double depostitFunds);
 	
-	AccountPojo AccountNumber(AccountPojo accountPojo);
+	AccountPojo viewAccountBalance(AccountPojo accountPojo, double ViewAccountBalance);
 	
-	AccountPojo AccountBalance(AccountPojo accountPojo);
-
-
+	
 }

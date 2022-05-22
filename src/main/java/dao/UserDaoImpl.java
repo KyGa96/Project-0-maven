@@ -3,6 +3,7 @@ package dao;
 
 import java.sql.Statement;
 
+
 import exception.SystemException;
 
 import java.sql.Connection;
@@ -28,7 +29,9 @@ public class UserDaoImpl implements UserDao {
 			ResultSet resultSet = stmt.executeQuery(query1);
 			resultSet.next();
 			userPojo.setAccountNumber(resultSet.getInt(1));
-			
+			String query2 = "INSERT INTO accountinfo(accountnumber) SELECT accountNumber FROM userinfo ORDER BY userinfo DESC LIMIT 1 returning accountnumber";
+			ResultSet resultSet2 = stmt.executeQuery(query2);
+			resultSet2.next();
 		} catch (SQLException e) {
 			e.printStackTrace(); 
 			throw new SystemException();
