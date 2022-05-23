@@ -38,7 +38,7 @@ public class UserPojo {
 	}
 
 
-	public int getAccountNumer() {
+	public int getAccountNumber() {
 		return accountNumber;
 	}
 

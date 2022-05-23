@@ -1,5 +1,6 @@
 package service;
 
+import exception.SystemException;
 import model.AccountPojo;
 
 public interface AccountService {
@@ -8,11 +9,9 @@ public interface AccountService {
 
 	
 
-	AccountPojo withdrawFromAccount(AccountPojo accountPojo, double withdrawFunds);
+	AccountPojo withdrawFromAccount(AccountPojo accountPojo) throws SystemException;
 	
-	AccountPojo depositToAccount(AccountPojo accountPojo, double depostitFunds);
-	
-	AccountPojo viewAccountBalance(AccountPojo accountPojo, double ViewAccountBalance);
-	
+	AccountPojo depositToAccount(AccountPojo accountPojo)throws SystemException;
+	;
 	
 }

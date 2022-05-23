@@ -23,9 +23,9 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public UserPojo addUser(UserPojo userPojo) throws SystemException {
+	public UserPojo addUser(UserPojo userPojo, AccountPojo accountPojo) throws SystemException{
 		
-		return userDao.addUser(userPojo);
+		return userDao.addUser(userPojo, accountPojo);
 	}
 
 	@Override

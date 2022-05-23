@@ -63,13 +63,12 @@ public class EasyBankingSystem {
 							System.out.println("|***WELCOME TO EASY BANKING MANAGEMENT SYSTEM***|");
 							System.out.println("|-----------------------------------------------|");
 							System.out.println("|          PLEASE ENTER A NEW PASSWORD          |");
-							System.out.println("|                (LETTERS ONLY)                 |");
 							System.out.println("|-----------------------------------------------|");
 							newUserPojo.setPassword(menu.nextLine());
-							UserPojo returnedUserPojo = null;
+							UserPojo userPojo = null;
 							
 								try {
-									returnedUserPojo = userService.addUser(newUserPojo);
+									userPojo = userService.addUser(newUserPojo, newAccountPojo);
 								}
 								catch(SystemException e) {
 									System.out.println(e.getMessage());
@@ -89,20 +88,44 @@ public class EasyBankingSystem {
 							System.out.println("|                                           |");
 							System.out.println("|3) EXIT                                    |");
 							System.out.println("|-------------------------------------------|");
-						
-						int selection2 = menu.nextInt();
+							String newaccountProceed = "Y";
+							while (newaccountProceed == "Y"){
+							int selection2 = menu.nextInt();
+								
 								switch(selection2) {
 								
 								case 1:
-									System.out.println("|--------------------------------------------------------|");
-									System.out.println("|          ***EASY BANKING MANAGEMENT SYSTEM***          |");
-									System.out.println("|--------------------------------------------------------|");
-									System.out.println("|PLEASE INPUT THE AMOUNT YOU WOULD LIKE TO WITHDRAW BELOW|");
-									System.out.println("|                                                        |");
-									System.out.println("|                   TYPE EXIT TO QUIT                    |");
-									System.out.println("|--------------------------------------------------------|");
-									
-									break;
+									System.out.println("|----------------------------------------------------------|");
+									System.out.println("|           ***EASY BANKING MANAGEMENT SYSTEM***           |");
+									System.out.println("|----------------------------------------------------------|");
+									System.out.println("| PLEASE INPUT THE AMOUNT YOU WOULD LIKE TO WITHDRAW BELOW |");
+									System.out.println("|----------------------------------------------------------|");
+									double withdraw = menu.nextDouble();
+									double updatedWithdrawBalance = newAccountPojo.getAccountBalance() - withdraw;
+									if (withdraw < 0) {
+										System.out.println("|---------------------------------------------|");
+										System.out.println("|    ***EASY BANKING MANAGEMENT SYSTEM***     |");
+										System.out.println("|---------------------------------------------|");
+										System.out.println("| WITHDRAW REQUEST DENIED, INSUFFICAINT FUNDS |");
+										System.out.println("|---------------------------------------------|");
+										break;
+									}else {
+										newAccountPojo.setAccountBalance(updatedWithdrawBalance);
+										try {
+											accountService.withdrawFromAccount(newAccountPojo);
+										}catch(SystemException e) {
+											System.out.println(e.getMessage());
+											break;
+										}
+
+										System.out.println("|-------------------------------------------------|");
+										System.out.println("|       ***EASY BANKING MANAGEMENT SYSTEM***      |");
+										System.out.println("|-------------------------------------------------|");
+										System.out.println("| WITHDRAW SUCESSFUL, NEW BALANCE DISPLAYED BELOW |");
+										System.out.println("|-------------------------------------------------|");
+										System.out.println(" NEW ACCOUNT BALANCE: " + newAccountPojo.getAccountBalance());
+										break;
+									}									
 									
 								case 2:
 								
@@ -110,9 +133,24 @@ public class EasyBankingSystem {
 									System.out.println("|          ***EASY BANKING MANAGEMENT SYSTEM***         |");
 									System.out.println("|-------------------------------------------------------|");
 									System.out.println("|PLEASE INPUT THE AMOUNT YOU WOULD LIKE TO DEPOSIT BELOW|");
-									System.out.println("|                                                       |");
-									System.out.println("|                   TYPE EXIT TO QUIT                   |");
 									System.out.println("|-------------------------------------------------------|");
+									double deposit = menu.nextDouble();
+									double updatedDepositBalance = newAccountPojo.getAccountBalance() + deposit;
+									newAccountPojo.setAccountBalance(updatedDepositBalance);
+									try {
+										accountService.depositToAccount(newAccountPojo);
+									}catch
+										(SystemException e){
+											System.out.println(e.getMessage());
+											break;
+										}
+
+									System.out.println("|------------------------------------------------|");
+									System.out.println("|      ***EASY BANKING MANAGEMENT SYSTEM***      |");
+									System.out.println("|------------------------------------------------|");
+									System.out.println("| DEPOSIT SUCESSFUL, NEW BALANCE DISPLAYED BELOW |");
+									System.out.println("|------------------------------------------------|");
+									System.out.println(" NEW ACCOUNT BALANCE: " + newAccountPojo.getAccountBalance());
 									break;
 									
 								case 3:
@@ -121,29 +159,56 @@ public class EasyBankingSystem {
 									System.out.println("|-----------------------------------------------------------|");
 									System.exit(0);
 									break;
-								
 								}
-						
-								break;
+							
+							}
+							break;
 						
 								
 	
 						case 2:
 							UserPojo existingUserPojo = new UserPojo();
+							AccountPojo extisitingUserAccountPojo = new AccountPojo();
 							System.out.println("|------------------------------------|");
 							System.out.println("|***EASY BANKING MANAGEMENT SYSTEM***|");
 							System.out.println("|------------------------------------|");
 							System.out.println("|   PLEASE ENTER EXISTING USERNAME   |"); 
 							System.out.println("|------------------------------------|");
+							menu.nextLine();
 							existingUserPojo.setUsername(menu.nextLine());
 							
-							menu.nextLine();
 							System.out.println("|------------------------------------|");
 							System.out.println("|***EASY BANKING MANAGEMENT SYSTEM***|");
 							System.out.println("|------------------------------------|");
 							System.out.println("|   PLEASE ENTER EXISTING PASSWORD   |"); 
 							System.out.println("|------------------------------------|");
 							existingUserPojo.setPassword(menu.nextLine());
+							UserPojo userLoginInfo = null;
+							
+							try {
+								userLoginInfo = userService.loginUser(existingUserPojo);
+							}catch(SystemException e) {
+								System.out.println("|----------------------------------------------|");
+								System.out.println("|     ***EASY BANKING MANAGEMENT SYSTEM***     |");
+								System.out.println("|----------------------------------------------|");
+								System.out.println("| AN ERROR HAS OCCURED, PLEASE TRY AGAIN LATER |"); 
+								System.out.println("|----------------------------------------------|");
+								e.printStackTrace();
+								break;
+							}
+							
+							int existingUserAccountNumber = userLoginInfo.getAccountNumber();
+							
+							if(existingUserAccountNumber == 0) {
+								System.out.println("|------------------------------------------------------|");
+								System.out.println("|         ***EASY BANKING MANAGEMENT SYSTEM***         |");
+								System.out.println("|------------------------------------------------------|");
+								System.out.println("| INCORRECT USERNAME AND/OR PASSWORD, PLEASE TRY AGAIN |"); 
+								System.out.println("|------------------------------------------------------|");
+							}else {
+								
+								extisitingUserAccountPojo.setAccountNumber(existingUserAccountNumber);
+							
 							
 							System.out.println("|-------------------------------------------|");
 							System.out.println("|   ***EASY BANKING MANAGEMENT SYSTEM***    |");
@@ -157,7 +222,7 @@ public class EasyBankingSystem {
 							String accountProceed = "Y";
 							while (accountProceed == "Y"){
 								
-							}
+							
 							System.out.println("|-------------------------------------------|");
 							System.out.println("|   ***EASY BANKING MANAGEMENT SYSTEM***    |");
 							System.out.println("|-------------------------------------------|");
@@ -169,17 +234,42 @@ public class EasyBankingSystem {
 							System.out.println("|                                           |");
 							System.out.println("|3) EXIT                                    |");
 							System.out.println("|-------------------------------------------|");
-							
 							int selection3 = menu.nextInt();
+								
 								switch(selection3) {
 								
 								case 1:
-									System.out.println("|--------------------------------------------------------|");
-									System.out.println("|          ***EASY BANKING MANAGEMENT SYSTEM***          |");
-									System.out.println("|--------------------------------------------------------|");
-									System.out.println("|PLEASE INPUT THE AMOUNT YOU WOULD LIKE TO WITHDRAW BELOW|");
-									System.out.println("|--------------------------------------------------------|");
-									break;
+									System.out.println("|----------------------------------------------------------|");
+									System.out.println("|           ***EASY BANKING MANAGEMENT SYSTEM***           |");
+									System.out.println("|----------------------------------------------------------|");
+									System.out.println("| PLEASE INPUT THE AMOUNT YOU WOULD LIKE TO WITHDRAW BELOW |");
+									System.out.println("|----------------------------------------------------------|");
+									double withdraw = menu.nextDouble();
+									double updatedWithdrawBalance = extisitingUserAccountPojo.getAccountBalance() - withdraw;
+									if (withdraw < 0) {
+										System.out.println("|---------------------------------------------|");
+										System.out.println("|    ***EASY BANKING MANAGEMENT SYSTEM***     |");
+										System.out.println("|---------------------------------------------|");
+										System.out.println("| WITHDRAW REQUEST DENIED, INSUFFICAINT FUNDS |");
+										System.out.println("|---------------------------------------------|");
+										break;
+									}else {
+										extisitingUserAccountPojo.setAccountBalance(updatedWithdrawBalance);
+										try {
+											accountService.withdrawFromAccount(extisitingUserAccountPojo);
+										}catch(SystemException e) {
+											System.out.println(e.getMessage());
+											break;
+										}
+
+										System.out.println("|-------------------------------------------------|");
+										System.out.println("|       ***EASY BANKING MANAGEMENT SYSTEM***      |");
+										System.out.println("|-------------------------------------------------|");
+										System.out.println("| WITHDRAW SUCESSFUL, NEW BALANCE DISPLAYED BELOW |");
+										System.out.println("|-------------------------------------------------|");
+										System.out.println(" NEW ACCOUNT BALANCE: " + extisitingUserAccountPojo.getAccountBalance());
+										break;
+									}									
 									
 								case 2:
 								
@@ -188,14 +278,33 @@ public class EasyBankingSystem {
 									System.out.println("|-------------------------------------------------------|");
 									System.out.println("|PLEASE INPUT THE AMOUNT YOU WOULD LIKE TO DEPOSIT BELOW|");
 									System.out.println("|-------------------------------------------------------|");
+									double deposit = menu.nextDouble();
+									double updatedDepositBalance = extisitingUserAccountPojo.getAccountBalance() + deposit;
+									extisitingUserAccountPojo.setAccountBalance(updatedDepositBalance);
+									try {
+										accountService.depositToAccount(extisitingUserAccountPojo);
+									}catch
+										(SystemException e){
+											System.out.println(e.getMessage());
+											break;
+										}
+
+									System.out.println("|------------------------------------------------|");
+									System.out.println("|      ***EASY BANKING MANAGEMENT SYSTEM***      |");
+									System.out.println("|------------------------------------------------|");
+									System.out.println("| DEPOSIT SUCESSFUL, NEW BALANCE DISPLAYED BELOW |");
+									System.out.println("|------------------------------------------------|");
+									System.out.println(" NEW ACCOUNT BALANCE: " + extisitingUserAccountPojo.getAccountBalance());
 									break;
+									
 								case 3:
 									System.out.println("|-----------------------------------------------------------|");
 									System.out.println("|***THANK YOU FOR CHOOSING EASY BANKING MANAGEMENT SYSTEM***|");
 									System.out.println("|-----------------------------------------------------------|");
 									System.exit(0);
 									break;
-								
+								}
+								}
 								}
 						
 								break;
@@ -211,11 +320,6 @@ public class EasyBankingSystem {
 		}							
 	}
 }
-				
-			
-				
-		
-				
 
 		
 		

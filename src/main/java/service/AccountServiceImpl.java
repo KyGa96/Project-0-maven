@@ -4,6 +4,7 @@ package service;
 import dao.AccountDao;
 
 import dao.AccountDaoImpl;
+import exception.SystemException;
 import model.AccountPojo;
 
 
@@ -22,22 +23,18 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public AccountPojo withdrawFromAccount(AccountPojo accountPojo, double withdrawFunds) {
+	public AccountPojo withdrawFromAccount(AccountPojo accountPojo) throws SystemException {
 		
 		return accountDao.withdrawFromAccount(accountPojo);
 	}
 
 	@Override
-	public AccountPojo depositToAccount(AccountPojo accountPojo, double depostitFunds) {
+	public AccountPojo depositToAccount(AccountPojo accountPojo) throws SystemException {
 		
 		return accountDao.depositToAccount(accountPojo);
 	}
 
-	@Override
-	public AccountPojo viewAccountBalance(AccountPojo accountPojo, double viewAccountBalance) {
-		
-		return accountDao.viewAccountBalance(accountPojo);
-	}
+
 
 }
 	

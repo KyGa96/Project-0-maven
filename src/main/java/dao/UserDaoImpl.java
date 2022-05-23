@@ -3,7 +3,6 @@ package dao;
 
 import java.sql.Statement;
 
-
 import exception.SystemException;
 
 import java.sql.Connection;
@@ -17,7 +16,7 @@ public class UserDaoImpl implements UserDao {
 	
 
 	@Override
-	public UserPojo addUser(UserPojo userPojo) throws SystemException { 
+	public UserPojo addUser(UserPojo userPojo, AccountPojo accountPojo) throws SystemException { 
 		Connection conn = null;
 		
 		try {
@@ -29,9 +28,15 @@ public class UserDaoImpl implements UserDao {
 			ResultSet resultSet = stmt.executeQuery(query1);
 			resultSet.next();
 			userPojo.setAccountNumber(resultSet.getInt(1));
-			String query2 = "INSERT INTO accountinfo(accountnumber) SELECT accountNumber FROM userinfo ORDER BY userinfo DESC LIMIT 1 returning accountnumber";
-			ResultSet resultSet2 = stmt.executeQuery(query2);
+			String quary2 = "INSERT INTO accountinfo(accountnumber) SELECT accountnumber FROM userinfo ORDER BY accountnumber DESC LIMIT 1 returning accountnumber";
+			ResultSet resultSet2 = stmt.executeQuery(quary2);
 			resultSet2.next();
+			accountPojo.setAccountNumber(resultSet2.getInt(1));
+			String quary3 = "UPDATE accountinfo SET accountbalance= 0 WHERE accountnumber=" + accountPojo.getAccountNumber();
+			ResultSet resultSet3 = stmt.executeQuery(quary3);
+			resultSet3.next();
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace(); 
 			throw new SystemException();
@@ -41,17 +46,17 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public UserPojo loginUser(UserPojo userPojo) {
+	public UserPojo loginUser(UserPojo userPojo)throws SystemException {
 		Connection conn = null;
 		
 		try {
 			
 			conn = DBUtil.makeConnection();
 			Statement stmt = conn.createStatement();
-			String addRecord = "INSERT INTO userinfo(password) VALUES ('" + userPojo.getUsername() + "', '" + userPojo.getPassword()+ "') returning password";
-			ResultSet resultSet = stmt.executeQuery(addRecord);
+			String query = "SELECT * FROM userinfo WHERE username="+"'"+userPojo.getUsername()+"'"+"and password=" +"'"+ userPojo.getPassword()+"'";
+			ResultSet resultSet = stmt.executeQuery(query);
 			if (resultSet.next()) {
-				userPojo.setPassword(resultSet.getString(1));
+				userPojo.setAccountNumber(resultSet.getInt(1));
 			}
 		
 		} catch(SQLException e) {
@@ -61,5 +66,4 @@ public class UserDaoImpl implements UserDao {
 	
 	}
 }
-
 	

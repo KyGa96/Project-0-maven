@@ -1,18 +1,16 @@
 package dao;
 
 import java.sql.Connection;
-
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
-
-
+import exception.SystemException;
 import model.AccountPojo;
 
 public class AccountDaoImpl implements AccountDao {
-	
-	public AccountPojo depositToAccount(AccountPojo accountPojo) {
+	@Override
+	public AccountPojo depositToAccount(AccountPojo accountPojo)throws SystemException{
 		Connection conn = null;
 		
 		try {
@@ -23,13 +21,14 @@ public class AccountDaoImpl implements AccountDao {
 			int rowsAffected = stmt.executeUpdate(query);
 		}catch (SQLException e) {
 			e.printStackTrace();
+			throw new SystemException();
 		}
 		return accountPojo;
 	}
 
 
 	@Override
-	public AccountPojo withdrawFromAccount(AccountPojo accountPojo) {
+	public AccountPojo withdrawFromAccount(AccountPojo accountPojo) throws SystemException {
 			 Connection conn = null;
 			
 			try {
@@ -42,24 +41,8 @@ public class AccountDaoImpl implements AccountDao {
 				
 			}
 			return accountPojo;
-		}
-
-
-	@Override
-	public AccountPojo viewAccountBalance(AccountPojo accountPojo) {
-		 Connection conn = null;
-		 
-		try {
-			conn = DBUtil.makeConnection();
-			Statement stmt = conn.createStatement();
-			String query = "SELECT * FROM accountinfo WHERE accountbalance =" + accountPojo.getAccountBalance();
-			int rowsAffected = stmt.executeUpdate(query);
-		}catch (SQLException e) {
-			e.printStackTrace();
-			
-		}
-		return accountPojo;
 	}
+	
 
 
 	

@@ -9,7 +9,7 @@ public class AccountPojo {
 		super();
 	}
 
-	public AccountPojo(int accountNumber, String accountName, Double accountBalance) { //Parameterized constructor
+	public AccountPojo(int accountNumber, double accountBalance) { //Parameterized constructor
 		super();
 		this.accountNumber = accountNumber;
 		this.accountBalance = accountBalance;
