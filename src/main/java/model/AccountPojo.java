@@ -2,7 +2,7 @@ package model;
 
 public class AccountPojo {
 	private int accountNumber;
-	private Double accountBalance;
+	private double accountBalance;
 	
 	
 	public AccountPojo() { //default constructor
@@ -28,7 +28,7 @@ public class AccountPojo {
 		return accountBalance;
 	}
 
-	public void setAccountBalance(Double accountBalance) {
+	public void setAccountBalance(double accountBalance) {
 		this.accountBalance = accountBalance;
 	}
 

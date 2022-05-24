@@ -33,8 +33,8 @@ public class UserDaoImpl implements UserDao {
 			resultSet2.next();
 			accountPojo.setAccountNumber(resultSet2.getInt(1));
 			String quary3 = "UPDATE accountinfo SET accountbalance= 0 WHERE accountnumber=" + accountPojo.getAccountNumber();
-			ResultSet resultSet3 = stmt.executeQuery(quary3);
-			resultSet3.next();
+			int resultSet3 = stmt.executeUpdate(quary3);
+			//resultSet3.next();
 			
 			
 		} catch (SQLException e) {

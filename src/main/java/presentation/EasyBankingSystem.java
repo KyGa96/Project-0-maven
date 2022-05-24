@@ -110,6 +110,7 @@ public class EasyBankingSystem {
 										System.out.println("|---------------------------------------------|");
 										break;
 									}else {
+										
 										newAccountPojo.setAccountBalance(updatedWithdrawBalance);
 										try {
 											accountService.withdrawFromAccount(newAccountPojo);
@@ -122,8 +123,11 @@ public class EasyBankingSystem {
 										System.out.println("|       ***EASY BANKING MANAGEMENT SYSTEM***      |");
 										System.out.println("|-------------------------------------------------|");
 										System.out.println("| WITHDRAW SUCESSFUL, NEW BALANCE DISPLAYED BELOW |");
+										System.out.println("|                                                 |");
+										System.out.println("|                  CONTINUE? Y/N                  |");
 										System.out.println("|-------------------------------------------------|");
 										System.out.println(" NEW ACCOUNT BALANCE: " + newAccountPojo.getAccountBalance());
+										newaccountProceed = menu.nextLine();
 										break;
 									}									
 									
@@ -149,8 +153,11 @@ public class EasyBankingSystem {
 									System.out.println("|      ***EASY BANKING MANAGEMENT SYSTEM***      |");
 									System.out.println("|------------------------------------------------|");
 									System.out.println("| DEPOSIT SUCESSFUL, NEW BALANCE DISPLAYED BELOW |");
+									System.out.println("|                                                |");
+									System.out.println("|                  CONTINUE? Y/N                 |");
 									System.out.println("|------------------------------------------------|");
 									System.out.println(" NEW ACCOUNT BALANCE: " + newAccountPojo.getAccountBalance());
+									newaccountProceed = menu.nextLine();
 									break;
 									
 								case 3:
@@ -251,7 +258,10 @@ public class EasyBankingSystem {
 										System.out.println("|    ***EASY BANKING MANAGEMENT SYSTEM***     |");
 										System.out.println("|---------------------------------------------|");
 										System.out.println("| WITHDRAW REQUEST DENIED, INSUFFICAINT FUNDS |");
+										System.out.println("|                                             |");
+										System.out.println("|                CONTINUE? Y/N                |");
 										System.out.println("|---------------------------------------------|");
+										accountProceed = menu.nextLine();
 										break;
 									}else {
 										extisitingUserAccountPojo.setAccountBalance(updatedWithdrawBalance);
@@ -266,8 +276,11 @@ public class EasyBankingSystem {
 										System.out.println("|       ***EASY BANKING MANAGEMENT SYSTEM***      |");
 										System.out.println("|-------------------------------------------------|");
 										System.out.println("| WITHDRAW SUCESSFUL, NEW BALANCE DISPLAYED BELOW |");
+										System.out.println("|                                                 |");
+										System.out.println("|                  CONTINUE? Y/N                  |");
 										System.out.println("|-------------------------------------------------|");
 										System.out.println(" NEW ACCOUNT BALANCE: " + extisitingUserAccountPojo.getAccountBalance());
+										accountProceed = menu.nextLine();
 										break;
 									}									
 									
@@ -293,8 +306,11 @@ public class EasyBankingSystem {
 									System.out.println("|      ***EASY BANKING MANAGEMENT SYSTEM***      |");
 									System.out.println("|------------------------------------------------|");
 									System.out.println("| DEPOSIT SUCESSFUL, NEW BALANCE DISPLAYED BELOW |");
+									System.out.println("|                                                |");
+									System.out.println("|                  CONTINUE? Y/N                 |");
 									System.out.println("|------------------------------------------------|");
 									System.out.println(" NEW ACCOUNT BALANCE: " + extisitingUserAccountPojo.getAccountBalance());
+									accountProceed = menu.nextLine();
 									break;
 									
 								case 3:
